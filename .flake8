@@ -1,0 +1,15 @@
+[flake8]
+exclude =
+    .git,
+    .eggs,
+    __pycache__,
+    build,
+    __init__.py,
+    dist,
+    venv,
+    .venv,
+    .mypy_cache,
+ignore = E203, E266, E501, W503, F403, E712
+max-complexity = 13
+max-line-length = 100
+select = B,C,E,F,W,T4,B9
