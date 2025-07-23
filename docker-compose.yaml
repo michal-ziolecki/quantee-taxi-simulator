@@ -1,0 +1,52 @@
+volumes:
+  quantee_data:
+    name: quantee_data_volume
+
+networks:
+  quantee_network:
+    name: quantee_network
+
+services:
+  dispatcher:
+#    platform: linux/amd64
+    container_name: dispatcher
+    image: dispatcher-img
+    build:
+      context: .
+      dockerfile: dispatcher/Dockerfile
+    env_file:
+      - .env
+#    environment:
+#      no_proxy: ${NO_PROXY}
+    volumes:
+      - ./dispatcher:/dispatcher
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+    networks:
+      - quantee_network
+
+  db:
+    image: postgres:15.0
+    container_name: dispatcher_db
+    restart: always
+    volumes:
+      - quantee_data:/var/lib/postgresql/data
+#      - ./dispatcher/db-data:/var/lib/postgresql/data  # use this line to persist data in local folder
+    environment:
+      POSTGRES_DB: "dispatcher_db"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_USER: "postgres"
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test:
+        ["CMD", "pg_isready", "-q", "-d", "dispatcher_db", "-U", "postgres"]
+      timeout: 45s
+      interval: 1s
+      retries: 45
+    networks:
+      - quantee_network
