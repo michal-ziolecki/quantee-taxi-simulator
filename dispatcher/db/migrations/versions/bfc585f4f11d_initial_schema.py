@@ -24,7 +24,9 @@ def upgrade() -> None:
         sa.Column("id", sa.UUID(), nullable=False),
         sa.Column("x", sa.Integer(), nullable=False),
         sa.Column("y", sa.Integer(), nullable=False),
-        sa.Column("status", sa.Enum("available", "busy", name="taxi_status"), nullable=False),
+        sa.Column(
+            "status", sa.Enum("available", "busy", "off", name="taxi_status"), nullable=False
+        ),
         sa.PrimaryKeyConstraint("id"),
     )
     op.create_index(op.f("ix_taxis_id"), "taxis", ["id"], unique=False)

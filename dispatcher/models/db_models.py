@@ -1,11 +1,10 @@
 import uuid
 
+from db.base import Base
 from models.enums import TaxiStatus
 from sqlalchemy import Column, Enum, ForeignKey, Integer
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
-
-from dispatcher.db.base import Base
 
 
 class Taxi(Base):
