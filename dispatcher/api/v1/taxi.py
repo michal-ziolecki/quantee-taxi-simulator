@@ -1,10 +1,12 @@
 from typing import Any
+from uuid import uuid4
 
-from fastapi import APIRouter
 from api.schemas.requests import TaxiRegisterRequest
 from api.schemas.response import TaxiRegisterResponse
+from fastapi import APIRouter
 from loguru import logger
-from uuid import uuid4
+
+
 router = APIRouter()
 
 

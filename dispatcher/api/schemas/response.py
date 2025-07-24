@@ -1,6 +1,13 @@
+from uuid import UUID
+
+from models.enums import TaxiStatus
 from pydantic import BaseModel
 
 
 class TaxiRegisterResponse(BaseModel):
-    status: str
-    taxi_id: str
+    id: UUID
+    status: TaxiStatus
+
+
+class ClientResponse(BaseModel):
+    user_id: UUID

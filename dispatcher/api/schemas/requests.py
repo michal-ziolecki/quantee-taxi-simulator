@@ -1,14 +1,15 @@
+from uuid import UUID
+
 from pydantic import BaseModel
 
 
 class TaxiRegisterRequest(BaseModel):
-    taxi_id: str
+    id: UUID
     x: int
     y: int
 
 
 class ClientRequest(BaseModel):
-    user_id: str
     pickup_x: int
     pickup_y: int
     dropoff_x: int
@@ -16,10 +17,10 @@ class ClientRequest(BaseModel):
 
 
 class PickupNotification(BaseModel):
-    taxi_id: str
-    user_id: str
+    taxi_id: UUID
+    user_id: UUID
 
 
 class DropoffNotification(BaseModel):
-    taxi_id: str
-    user_id: str
+    taxi_id: UUID
+    user_id: UUID
