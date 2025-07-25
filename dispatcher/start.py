@@ -1,6 +1,8 @@
-from api.v1.routes import router as api_router
+from api.handlers import register_exception_handlers
+from api.middlewares import register_middlewares
+from api.routing import register_routes
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+
 
 
 app = FastAPI(
@@ -12,14 +14,11 @@ app = FastAPI(
     openapi_url="/openapi.json",
 )
 
-# Optional: Enable CORS for local testing or frontend integration
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],  # Adjust for production
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# register middlewares
+register_middlewares(app=app)
 
-# Register API routers
-app.include_router(api_router, prefix="/api/v1")
+# register API routing
+register_routes(app=app)
+
+# register api exception handling
+register_exception_handlers(app=app)

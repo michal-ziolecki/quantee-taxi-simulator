@@ -147,7 +147,8 @@ migration:
 	@if [ -z "$(title)" ]; then \
 		echo "Error: You must provide a title for the migration by argument title=name" && exit 1; \
 	fi
-	$(DOCKER) exec -it $(BE_CONTAINER_NAME) bash -c "export ALEMBIC_CONFIG=$(ALEMBIC_CONFIG) && alembic revision -m '$(title)'"
+	$(DOCKER) exec -it $(BE_CONTAINER_NAME) bash -c "export ALEMBIC_CONFIG=$(ALEMBIC_CONFIG) && alembic revision --autogenerate -m '$(title)'"
+
 
 migrate-up:
 	$(DOCKER) exec -it $(BE_CONTAINER_NAME) bash -c "export ALEMBIC_CONFIG=$(ALEMBIC_CONFIG) && alembic upgrade head"
@@ -163,9 +164,6 @@ migrate-down:
 		echo "Error: You must provide a version to downgrade to by argument version=hashid" && exit 1; \
 	fi
 	$(DOCKER) exec -it $(BE_CONTAINER_NAME) bash -c "export ALEMBIC_CONFIG=$(ALEMBIC_CONFIG) && alembic downgrade $(version)"
-
-give-migrations-permission:
-	$(DOCKER) exec -u root -it $(BE_CONTAINER_NAME) bash -c "chmod -R 777 /code/api/migrations"
 
 logs:
 	$(DOCKER) logs -f --tail 100 $(BE_CONTAINER_NAME)
