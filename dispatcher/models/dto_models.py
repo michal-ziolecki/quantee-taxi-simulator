@@ -2,7 +2,6 @@ from uuid import UUID
 
 from models.db_models import Taxi, Trip
 from models.enums import TaxiStatus
-
 from pydantic import BaseModel
 
 
@@ -19,6 +18,7 @@ class TaxiDTO(BaseModel):
 
     def to_model(self) -> Taxi:
         return Taxi(id=self.id, x=self.x, y=self.y, status=self.status)
+
 
 class TripDTO(BaseModel):
     id: UUID
@@ -59,4 +59,3 @@ class TripDTO(BaseModel):
             waiting_time=self.waiting_time,
             travel_time=self.travel_time,
         )
-

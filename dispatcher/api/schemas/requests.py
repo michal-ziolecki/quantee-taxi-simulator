@@ -11,7 +11,7 @@ class TaxiRegisterRequest(BaseModel):
 
     @model_validator(mode="before")
     @classmethod
-    def generate_id_if_missing(cls, values: dict[str, Any]) -> dict [str, Any]:
+    def generate_id_if_missing(cls, values: dict[str, Any]) -> dict[str, Any]:
         if not values.get("id"):
             values["id"] = uuid4()
         return values
