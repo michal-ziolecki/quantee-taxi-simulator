@@ -13,7 +13,6 @@ from dispatcher.db.session import engine  # noqa: E402
 from dispatcher.models import db_models, enums  # noqa: E402 F401
 
 
-
 config = context.config
 config.set_main_option("sqlalchemy.url", DATABASE_URL)
 

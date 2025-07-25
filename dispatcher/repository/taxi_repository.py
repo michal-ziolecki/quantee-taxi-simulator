@@ -13,7 +13,7 @@ class TaxiRepository:
     def __init__(self) -> None:
         self.db: SessionLocal = SessionLocal()
 
-    def __del__(self):
+    def __del__(self) -> None:
         if self.db:
             self.db.close()
 

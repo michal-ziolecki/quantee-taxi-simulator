@@ -7,7 +7,6 @@ from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
 
-
 class Taxi(Base):
     __tablename__ = "taxis"
 

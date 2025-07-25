@@ -4,7 +4,6 @@ from api.routing import register_routes
 from fastapi import FastAPI
 
 
-
 app = FastAPI(
     title="Taxi Dispatch API",
     description="Simulated taxi dispatch system with FastAPI + PostgreSQL",
