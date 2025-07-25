@@ -4,12 +4,14 @@ import sys
 
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../")))
+
 from alembic import context  # noqa: E402
 
 from dispatcher.config import DATABASE_URL  # noqa: E402
 from dispatcher.db.base import Base  # noqa: E402
 from dispatcher.db.session import engine  # noqa: E402
 from dispatcher.models import db_models, enums  # noqa: E402 F401
+
 
 
 config = context.config
