@@ -6,6 +6,7 @@ from pydantic import BaseModel, model_validator
 
 class TaxiRegisterRequest(BaseModel):
     id: UUID | None
+    network_id: str  # network address / service name in docker network
     x: int
     y: int
 
@@ -22,6 +23,7 @@ class TaxiUnregisterRequest(BaseModel):
 
 
 class ClientRequest(BaseModel):
+    user_id: UUID  # in real application this is will be from JWT during the request.
     pickup_x: int
     pickup_y: int
     dropoff_x: int
@@ -30,9 +32,9 @@ class ClientRequest(BaseModel):
 
 class PickupNotification(BaseModel):
     taxi_id: UUID
-    user_id: UUID
+    trip_id: UUID
 
 
 class DropoffNotification(BaseModel):
     taxi_id: UUID
-    user_id: UUID
+    trip_id: UUID

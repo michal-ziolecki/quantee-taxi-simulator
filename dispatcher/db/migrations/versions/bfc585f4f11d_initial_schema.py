@@ -39,8 +39,9 @@ def upgrade() -> None:
         sa.Column("pickup_y", sa.Integer(), nullable=False),
         sa.Column("dropoff_x", sa.Integer(), nullable=False),
         sa.Column("dropoff_y", sa.Integer(), nullable=False),
-        sa.Column("waiting_time", sa.Integer(), nullable=True),
-        sa.Column("travel_time", sa.Integer(), nullable=True),
+        sa.Column("created_at", sa.DateTime(timezone=True), default=sa.func.now(), nullable=False),
+        sa.Column("pickup_time", sa.DateTime(timezone=True), nullable=True),
+        sa.Column("dropoff_time", sa.DateTime(timezone=True), nullable=True),
         sa.ForeignKeyConstraint(
             ["taxi_id"],
             ["taxis.id"],

@@ -149,7 +149,6 @@ migration:
 	fi
 	$(DOCKER) exec -it $(BE_CONTAINER_NAME) bash -c "export ALEMBIC_CONFIG=$(ALEMBIC_CONFIG) && alembic revision --autogenerate -m '$(title)'"
 
-
 migrate-up:
 	$(DOCKER) exec -it $(BE_CONTAINER_NAME) bash -c "export ALEMBIC_CONFIG=$(ALEMBIC_CONFIG) && alembic upgrade head"
 

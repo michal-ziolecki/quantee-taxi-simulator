@@ -14,7 +14,13 @@ class TaxiService:
         self.repo = repo
 
     def register_taxi(self, payload: TaxiRegisterRequest) -> TaxiRegisterResponse:
-        dto = TaxiDTO(id=payload.id, x=payload.x, y=payload.y, status=TaxiStatus.available)
+        dto = TaxiDTO(
+            id=payload.id,
+            network_id=payload.network_id,
+            x=payload.x,
+            y=payload.y,
+            status=TaxiStatus.available,
+        )
         model: TaxiDTO = self.repo.upsert(dto)
         return TaxiRegisterResponse(id=model.id, status=model.status)
 
@@ -28,6 +34,12 @@ class TaxiService:
             model.status = TaxiStatus.off
             result: TaxiDTO = self.repo.upsert(model)
             return TaxiRegisterResponse(id=result.id, status=result.status)
+
+    def update_taxi_status(self, taxi: TaxiDTO) -> TaxiDTO:
+        return self.repo.update_status(taxi)
+
+    def find_available_taxis(self) -> list[TaxiDTO]:
+        return self.repo.get_taxis_by_status(status=TaxiStatus.available)  # type: ignore
 
 
 taxi_service = TaxiService(taxi_repo)
