@@ -1,27 +1,31 @@
-from uuid import UUID
+from datetime import datetime
+from uuid import UUID, uuid4
 
 from models.db_models import Taxi, Trip
 from models.enums import TaxiStatus
-
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class TaxiDTO(BaseModel):
 
     id: UUID
+    network_id: str
     x: int
     y: int
     status: TaxiStatus
 
     @classmethod
     def from_model(cls, model: Taxi) -> "TaxiDTO":
-        return cls(id=model.id, x=model.x, y=model.y, status=model.status)
+        return cls(
+            id=model.id, network_id=model.network_id, x=model.x, y=model.y, status=model.status
+        )
 
     def to_model(self) -> Taxi:
-        return Taxi(id=self.id, x=self.x, y=self.y, status=self.status)
+        return Taxi(id=self.id, network_id=self.network_id, x=self.x, y=self.y, status=self.status)
+
 
 class TripDTO(BaseModel):
-    id: UUID
+    id: UUID = Field(default_factory=uuid4)
     taxi_id: UUID
     user_id: UUID
 
@@ -30,8 +34,9 @@ class TripDTO(BaseModel):
     dropoff_x: int
     dropoff_y: int
 
-    waiting_time: int | None = None
-    travel_time: int | None = None
+    created_at: datetime = datetime.utcnow()
+    pickup_time: datetime | None = None
+    dropoff_time: datetime | None = None
 
     @classmethod
     def from_model(cls, model: Trip) -> "TripDTO":
@@ -43,8 +48,9 @@ class TripDTO(BaseModel):
             pickup_y=model.pickup_y,
             dropoff_x=model.dropoff_x,
             dropoff_y=model.dropoff_y,
-            waiting_time=model.waiting_time,
-            travel_time=model.travel_time,
+            created_at=model.created_at,
+            pickup_time=model.pickup_time,
+            dropoff_time=model.dropoff_time,
         )
 
     def to_model(self) -> Trip:
@@ -56,7 +62,7 @@ class TripDTO(BaseModel):
             pickup_y=self.pickup_y,
             dropoff_x=self.dropoff_x,
             dropoff_y=self.dropoff_y,
-            waiting_time=self.waiting_time,
-            travel_time=self.travel_time,
+            created_at=self.created_at,
+            pickup_time=self.pickup_time,
+            dropoff_time=self.dropoff_time,
         )
-

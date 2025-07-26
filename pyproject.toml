@@ -26,6 +26,7 @@ sqlalchemy = "^2.0.41"
 pydantic = "^2.11.7"
 uvicorn = "^0.35.0"
 psycopg2-binary = "^2.9.10"
+httpx = "^0.28.1"
 
 
 [tool.poetry.group.tests.dependencies]
@@ -78,6 +79,7 @@ no_implicit_optional = "true"
 strict = "true"
 disallow_untyped_defs = "true"
 exclude = [".git", ".mypy_cache", ".pytest_cache", ".venv", "buck-out", "build", "dist", "venv"]
+disable_error_code = ["misc"]
 
 [tool.pytest.ini_options]
 minversion = "8.4.1"
