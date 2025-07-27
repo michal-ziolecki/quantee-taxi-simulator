@@ -27,7 +27,7 @@
 	migration-current \
 	migrate-down \
 	give-migrations-permission \
-	logs \
+	dispatcher-logs \
 	help
 
 
@@ -72,7 +72,7 @@ help:
 	@echo "  migration-current:           Show current Alembic migration"
 	@echo "  migrate-down:                Revert to a specific migration (use version=...)"
 	@echo "  give-migrations-permission:  Fix migration folder permissions"
-	@echo "  logs:                        Tail logs from the backend container"
+	@echo "  dispatcher-logs:             Tail logs from the backend dispatcher container"
 
 
 init-env:
@@ -164,7 +164,7 @@ migrate-down:
 	fi
 	$(DOCKER) exec -it $(BE_CONTAINER_NAME) bash -c "export ALEMBIC_CONFIG=$(ALEMBIC_CONFIG) && alembic downgrade $(version)"
 
-logs:
+dispatcher-logs:
 	$(DOCKER) logs -f --tail 100 $(BE_CONTAINER_NAME)
 
 

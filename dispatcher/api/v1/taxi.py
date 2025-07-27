@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from api.schemas.requests import TaxiRegisterRequest, TaxiUnregisterRequest
 from api.schemas.response import TaxiRegisterResponse, TaxiResponse
 from fastapi import APIRouter
@@ -9,14 +11,17 @@ from services.taxi_service import taxi_service
 router = APIRouter()
 
 
+@router.get("/")
+def fetch_taxi(taxi_id: UUID) -> TaxiResponse:
+    logger.debug(f"Find taxi by id {taxi_id}")
+    return taxi_service.find_taxi_by_id(taxi_id)
+
+
 @router.get("/available")
 def fetch_available_taxis() -> list[TaxiResponse]:
     logger.debug("taxis list")
     taxi_dtos: list[TaxiDTO] = taxi_service.find_available_taxis()
     return [TaxiResponse(**t.model_dump()) for t in taxi_dtos]
-
-
-# todo optional - add taxi by id
 
 
 @router.post("/register", response_model=TaxiRegisterResponse)

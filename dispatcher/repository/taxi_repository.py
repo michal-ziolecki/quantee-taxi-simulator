@@ -30,10 +30,10 @@ class TaxiRepository:
         self.db.commit()
         return TaxiDTO.from_model(model)
 
-    def get(self, texi_id: UUID) -> TaxiDTO:
-        existing_obj = self.db.get(Taxi, texi_id)
+    def get(self, taxi_id: UUID) -> TaxiDTO:
+        existing_obj = self.db.get(Taxi, taxi_id)
         if not existing_obj:
-            raise NotExistException(message=f"Not found taxi object with ID = {texi_id}")
+            raise NotExistException(message=f"Not found taxi object with ID = {taxi_id}")
         return TaxiDTO.from_model(existing_obj)
 
     def get_taxis_by_status(self, status: TaxiStatus) -> list[TaxiDTO]:
