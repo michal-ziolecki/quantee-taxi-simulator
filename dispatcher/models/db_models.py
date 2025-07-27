@@ -2,7 +2,7 @@ import uuid
 
 from db.base import Base
 from models.enums import TaxiStatus
-from sqlalchemy import Column, Enum, ForeignKey, Integer, String, DateTime, func
+from sqlalchemy import Column, DateTime, Enum, ForeignKey, Integer, String, func
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 
@@ -33,7 +33,7 @@ class Trip(Base):
     dropoff_x = Column(Integer, nullable=False)
     dropoff_y = Column(Integer, nullable=False)
 
-    created_at = Column(DateTime(timezone=True),  default=func.now(), nullable=False)
+    created_at = Column(DateTime(timezone=True), default=func.now(), nullable=False)
     pickup_time = Column(DateTime(timezone=True), nullable=True)
     dropoff_time = Column(DateTime(timezone=True), nullable=True)
 

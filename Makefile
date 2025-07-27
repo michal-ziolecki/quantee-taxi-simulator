@@ -166,3 +166,7 @@ migrate-down:
 
 logs:
 	$(DOCKER) logs -f --tail 100 $(BE_CONTAINER_NAME)
+
+
+client-request:
+	python ./client_simulator/client.py --host http://localhost:8080

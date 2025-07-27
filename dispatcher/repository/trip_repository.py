@@ -26,17 +26,13 @@ class TripRepository:
         return [TripDTO.from_model(existing_obj) for existing_obj in existing_objs]
 
     def get_trip_by_id(self, trip_id: UUID) -> TripDTO:
-        if not self.db.query(
-            self.db.query(Trip).filter_by(id=trip_id).exists()
-        ).scalar():
+        if not self.db.query(self.db.query(Trip).filter_by(id=trip_id).exists()).scalar():
             raise NotExistException(message=f"Trip {trip_id} not exists!")
         existing_obj = self.db.query(Trip).filter_by(id=trip_id).one()
         return TripDTO.from_model(existing_obj)
 
     def update_trip(self, dto: TripDTO) -> TripDTO:
-        if not self.db.query(
-            self.db.query(Trip).filter_by(id=dto.id).exists()
-        ).scalar():
+        if not self.db.query(self.db.query(Trip).filter_by(id=dto.id).exists()).scalar():
             raise NotExistException(message=f"Trip {dto.id} not exists!")
         trip_data = dto.model_dump()
         not_editable = ["id", "taxi_id", "user_id"]
