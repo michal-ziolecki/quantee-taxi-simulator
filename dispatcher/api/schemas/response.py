@@ -1,5 +1,6 @@
-from uuid import UUID
 from datetime import datetime
+from uuid import UUID
+
 from models.enums import TaxiStatus, TripRequestStatus
 from pydantic import BaseModel
 
