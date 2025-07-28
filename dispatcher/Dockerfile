@@ -34,5 +34,5 @@ RUN chmod a+x /dispatcher/start.sh \
     && chown -R quantee:quantee /dispatcher
 
 USER quantee:quantee
-ENTRYPOINT ["/dispatcher/start.sh"]
+ENTRYPOINT ["/bin/sh", "/dispatcher/start.sh"]
 EXPOSE 8080/tcp

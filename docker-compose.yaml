@@ -26,7 +26,7 @@ services:
         condition: service_healthy
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8080/health-check" ]
-      interval: 60s
+      interval: 30s
       timeout: 3s
       retries: 5
     restart: always
@@ -81,9 +81,9 @@ services:
   taxi-002:
     container_name: taxi-002
     image: taxi-img
-    build:
-      context: .
-      dockerfile: taxi_simulator/Dockerfile
+#    build:
+#      context: .
+#      dockerfile: taxi_simulator/Dockerfile
     env_file:
       - .env
     volumes:
