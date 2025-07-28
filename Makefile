@@ -90,6 +90,7 @@ rebuild-and-run:
 	$(COMPOSE) up -d --build --force-recreate
 
 run:
+	sed -i 's/\r//' ./dispatcher/start.sh
 	$(COMPOSE) up -d
 
 stop:
