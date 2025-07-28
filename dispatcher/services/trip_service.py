@@ -13,6 +13,7 @@ from services.taxi_service import TaxiService, taxi_service
 
 class TripService:
     def __init__(self, trip_repo: TripRepository, taxi_svc: TaxiService) -> None:
+        # todo DB repository methods can be async and awaited the same in this service
         self.trip_repo = trip_repo
         self.taxi_svc = taxi_svc
 
@@ -43,8 +44,16 @@ class TripService:
         )
         # Send assignment to taxi
         try:
-            url = f"http://{taxi.network_id}:8080/assign_client"
-            httpx.post(url, json=trip_dto.model_dump_json())
+            # todo can be async and awaited
+            url = f"http://{taxi.network_id}:8000/api/v1/taxi/assign_client"
+            resp = httpx.post(url, content=trip_dto.model_dump_json())
+            resp.raise_for_status()
+            logger.info(f"Client assignment for user {payload.user_id} response: {resp.json()}")
+        except httpx.HTTPStatusError as e:
+            logger.error(f"Error {e.response.status_code}: {e.response.text}")
+            return ClientRequestResponse(
+                status=TripRequestStatus.error_during_assigning, taxi_id=taxi.id
+            )
         except Exception as e:
             logger.error(f"Error assigning trip to taxi: {e}")
             return ClientRequestResponse(
@@ -71,11 +80,17 @@ class TripService:
                 message=f"Trip {payload.trip_id} related to"
                 f" the Taxi {payload.taxi_id} not exists!"
             )
-
+        taxi: TaxiDTO = self.taxi_svc.find_taxi_by_id(trip.taxi_id)
         if isinstance(payload, PickupNotification):
             trip.pickup_time = datetime.utcnow()
+            taxi.x = trip.pickup_x
+            taxi.y = trip.pickup_y
         elif isinstance(payload, DropoffNotification):
             trip.dropoff_time = datetime.utcnow()
+            taxi.x = trip.dropoff_x
+            taxi.y = trip.dropoff_y
+            taxi.status = TaxiStatus.available
+        self.taxi_svc.update_taxi(taxi)
         return self.trip_repo.update_trip(dto=trip)
 
 

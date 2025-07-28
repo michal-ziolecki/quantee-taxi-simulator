@@ -12,7 +12,7 @@ router = APIRouter()
 @router.post("/request", response_model=ClientRequestResponse)
 def request_trip(payload: ClientRequest) -> ClientRequestResponse:
     logger.debug(f"client {payload.user_id} requested trip")
-    return trip_service.assign_trip(payload)
+    return trip_service.assign_trip(payload)  # can be async
 
 
 @router.get("/list")
