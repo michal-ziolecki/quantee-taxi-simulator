@@ -25,6 +25,8 @@ make run
 ```
 4. Simulate client/user trip request
 ```commandline
+pip install poetry 
+poetry install
 make client-request
 ```
 5. Track logs with commands below
@@ -44,3 +46,6 @@ docker logs -f --tail 100 taxi-002
   - add integration tests for endpoints with real whole flow from endpoint,
   to the DB query and back again to response.
   - Add async DB connection and async and awaited repository methods.
+
+#### *During run, include that I used Windows (unnecessary) for it, so maybe it happen that you need to remove `\r`
+* run ``sed -i 's/\r//' ./dispatcher/start.sh`` if needed.
