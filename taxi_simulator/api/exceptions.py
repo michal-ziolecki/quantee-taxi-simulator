@@ -50,13 +50,3 @@ class BaseHTTPException(Exception):
         if self.meta:
             response["meta"] = self.meta
         return response, self.code
-
-
-class NotExistException(BaseHTTPException):
-    error_code: int = HTTPStatus.NOT_FOUND.value
-    error_name: str = HTTPStatus.NOT_FOUND.name
-    message: str = HTTPStatus.NOT_FOUND.description
-
-
-class DBException(BaseHTTPException):
-    error_name: str = "Database exception, contact with the administrator"

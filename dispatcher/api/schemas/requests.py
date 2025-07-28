@@ -1,3 +1,4 @@
+import json
 from typing import Any
 from uuid import UUID, uuid4
 
@@ -12,10 +13,12 @@ class TaxiRegisterRequest(BaseModel):
 
     @model_validator(mode="before")
     @classmethod
-    def generate_id_if_missing(cls, values: dict[str, Any]) -> dict[str, Any]:
-        if not values.get("id"):
-            values["id"] = uuid4()
-        return values
+    def generate_id_if_missing(cls, values: dict[str, Any] | str) -> dict[str, Any]:
+        if isinstance(values, str):
+            values = json.loads(values)
+        if not values.get("id"):  # type: ignore
+            values["id"] = uuid4()  # type: ignore
+        return values  # type: ignore
 
 
 class TaxiUnregisterRequest(BaseModel):
